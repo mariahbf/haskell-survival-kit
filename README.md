@@ -1,0 +1,1 @@
+# haskell-survival-kit
