@@ -20,7 +20,8 @@ menu kit = do
     putStrLn "3. Remover item do kit"
     putStrLn "4. Calcular custo total do kit"
     putStrLn "5. Filtrar itens por intervalo de preço"
-    putStrLn "6. Sair da aplicação"
+    putStrLn "6. Buscar item por nome"
+    putStrLn "7. Sair da aplicação"
     putStr "Escolha uma opção: "
     hFlush stdout
     opcao <- getLine
@@ -30,7 +31,8 @@ menu kit = do
         "3" -> removerItem kit
         "4" -> calcularCustoTotal kit
         "5" -> filtrarItens kit
-        "6" -> putStrLn "Saindo da aplicação..."
+        "6" -> buscarItem kit
+        "7" -> putStrLn "Saindo da aplicação..."
         _   -> do
             putStrLn "Opção inválida. Tente novamente."
             menu kit
@@ -109,4 +111,19 @@ filtrarItens kit = do
             mapM_ (\(i, item) -> putStrLn $ show i ++ ". " ++ nome item ++ " - " ++ show (preco item) ++ " créditos") (zip [1..] itensFiltrados)
     menu kit
 
+--buscar item por nome
+buscarItem :: [Item] -> IO ()
+buscarItem kit = do
+    putStr "Digite o nome do item para buscar: "
+    hFlush stdout
+    nome <- getLine
+    encontrarItemPorNome kit nome
+    menu kit 
+
+-- Função para encontrar um item pelo nome
+encontrarItemPorNome :: [Item] -> String -> IO ()
+encontrarItemPorNome [] nomeBuscado = putStrLn "Item não encontrado."
+encontrarItemPorNome (item:kit) nomeBuscado
+    | nomeBuscado == nome item = putStrLn $ "Item encontrado: " ++ nome item ++ " - " ++ show (preco item) ++ " créditos"
+    | otherwise               = encontrarItemPorNome kit nomeBuscado
 
