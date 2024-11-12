@@ -2,16 +2,13 @@
 
 import System.IO (hFlush, stdout)
 
--- Definindo o tipo Item com nome e preço
 data Item = Item { nome :: String, preco :: Int } deriving Show
 
--- Função principal
 main :: IO ()
 main = do
     putStrLn "Bem-vindo ao Kit de Sobrevivência para Missão Espacial!"
     menu []
 
--- Função de menu
 menu :: [Item] -> IO ()
 menu kit = do
     putStrLn "\nMenu Principal:"
@@ -38,7 +35,7 @@ menu kit = do
             menu kit
 
 
--- Função para adicionar um item ao kit
+-- 1. Adicionar item ao kit: Permite ao usuário adicionar um novo item ao kit, especificando nome e preço.
 adicionarItem :: [Item] -> IO ()
 adicionarItem kit = do
     putStr "Nome do item: "
@@ -53,7 +50,7 @@ adicionarItem kit = do
     menu novoKit
 
 
--- Função para listar todos os itens do kit
+-- 2. Listar todos os itens no kit: Exibe todos os itens adicionados até o momento.
 listarItens :: [Item] -> IO ()
 listarItens [] = putStrLn "O kit está vazio."
 listarItens kit = do
@@ -62,7 +59,7 @@ listarItens kit = do
     menu kit
 
 
--- Função para remover um item do kit
+-- 3. Remover item do kit: Exibe a lista de itens com numeração e permite ao usuário remover um item específico.
 removerItem :: [Item] -> IO ()
 removerItem [] = do
     putStrLn "O kit está vazio. Não há itens para remover."
@@ -83,8 +80,7 @@ removerItem kit = do
             putStrLn "Índice inválido. Tente novamente."
             removerItem kit
 
-
--- Função para calcular o custo total do kit
+-- 4. Calcular custo total do kit: Soma o preço de todos os itens e exibe o custo total do kit de sobrevivência.
 calcularCustoTotal :: [Item] -> IO ()
 calcularCustoTotal kit = do
     let total = sum (map preco kit)
@@ -92,7 +88,7 @@ calcularCustoTotal kit = do
     menu kit
 
 
--- Função para filtrar itens por intervalo de preço
+-- Item de Inovação: Filtrar itens por intervalo de preço.
 filtrarItens :: [Item] -> IO ()
 filtrarItens kit = do
     putStr "Preço mínimo: "
@@ -111,7 +107,7 @@ filtrarItens kit = do
             mapM_ (\(i, item) -> putStrLn $ show i ++ ". " ++ nome item ++ " - " ++ show (preco item) ++ " créditos") (zip [1..] itensFiltrados)
     menu kit
 
---buscar item por nome
+-- Item de Inovação: Buscar item por nome.
 buscarItem :: [Item] -> IO ()
 buscarItem kit = do
     putStr "Digite o nome do item para buscar: "
@@ -120,7 +116,7 @@ buscarItem kit = do
     encontrarItemPorNome kit nome
     menu kit 
 
--- Função para encontrar um item pelo nome
+-- Item de Inovação: Encontrar item pelo nome.
 encontrarItemPorNome :: [Item] -> String -> IO ()
 encontrarItemPorNome [] nomeBuscado = putStrLn "Item não encontrado."
 encontrarItemPorNome (item:kit) nomeBuscado
